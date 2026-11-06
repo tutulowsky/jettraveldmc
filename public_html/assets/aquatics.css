@@ -1,0 +1,183 @@
+/* Home page – "World Aquatics Masters Championships 2027" card + video modal */
+
+/* five cards in the row instead of four */
+@media (min-width: 1025px) {
+  .elementor-11 .elementor-element.elementor-element-eb94378 > .e-con-inner > .e-con { --width: 20%; }
+}
+/* tablet: 3 + 2, second row centred */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .elementor-11 .elementor-element.elementor-element-eb94378 > .e-con-inner {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    row-gap: 20px !important;
+  }
+  .elementor-11 .elementor-element.elementor-element-eb94378 > .e-con-inner > .e-con { --width: 33.333%; }
+}
+
+/* ---------- card ---------- */
+.jt-aq .elementor-flip-box__front {
+  background-image: url("/assets/img/aquatics-card.webp") !important;
+  background-position: center 30% !important;
+  transition: transform .6s cubic-bezier(.22, .61, .36, 1);
+}
+.jt-aq .elementor-flip-box { cursor: pointer; overflow: hidden; border-radius: 20px; }
+/* title sits over the water, below the swimmer */
+.jt-aq .elementor-flip-box__front .elementor-flip-box__layer__overlay {
+  justify-content: flex-end;
+  padding: 24px 18px 30px;
+  transition: background-color .35s ease;
+}
+.jt-aq .elementor-flip-box__layer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.jt-aq .elementor-flip-box__layer__title {
+  padding: 6px 10px;
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.jt-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 7px 18px 7px 7px;
+  background: #fff;
+  color: #1d2433;
+  border-radius: 999px;
+  font-family: "Futura normal", "Futura", sans-serif;
+  font-size: 14px;
+  letter-spacing: .02em;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+}
+.jt-play__icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #cf223b;
+}
+.jt-play__icon svg { width: 11px; height: 12px; margin-left: 2px; fill: #fff; }
+
+/* Desktop / mouse: the button appears on hover */
+@media (hover: hover) and (min-width: 768px) {
+  .jt-play {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .3s ease, transform .35s cubic-bezier(.22, .61, .36, 1);
+  }
+  .jt-aq-card:hover .jt-play,
+  .jt-aq-card:focus-visible .jt-play { opacity: 1; transform: none; }
+  .jt-aq-card:hover .elementor-flip-box__front .elementor-flip-box__layer__overlay,
+  .jt-aq-card:focus-visible .elementor-flip-box__front .elementor-flip-box__layer__overlay { background-color: rgba(2, 1, 1, .35); }
+  .jt-aq-card:hover .jt-play__icon { animation: jt-pulse 1.6s ease-out infinite; }
+}
+.jt-aq-card:focus { outline: none; }
+.jt-aq-card:focus-visible { outline: 2px solid #cf223b; outline-offset: 3px; }
+
+@keyframes jt-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(207, 34, 59, .55); }
+  100% { box-shadow: 0 0 0 10px rgba(207, 34, 59, 0); }
+}
+
+/* ---------- modal ---------- */
+.jt-vmodal {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: grid;
+  place-items: center;
+  padding: 64px 24px 24px;
+  background: rgba(12, 14, 20, .9);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, visibility 0s linear .3s;
+}
+.jt-vmodal.is-open { opacity: 1; visibility: visible; transition: opacity .3s ease; }
+
+.jt-vmodal__frame {
+  position: relative;
+  width: min(1100px, 100%, calc((100vh - 120px) * 16 / 9));
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+  transform: scale(.96);
+  transition: transform .4s cubic-bezier(.22, .61, .36, 1);
+}
+.jt-vmodal.is-open .jt-vmodal__frame { transform: none; }
+.jt-vmodal video { display: block; width: 100%; height: 100%; object-fit: contain; background: #000; }
+
+.jt-vmodal__close,
+.jt-vmodal__close:hover,
+.jt-vmodal__close:focus {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .35);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color .2s, transform .35s cubic-bezier(.22, .61, .36, 1);
+}
+.jt-vmodal__close:hover { border-color: #fff; transform: rotate(90deg); }
+.jt-vmodal__close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.jt-vmodal__close::before,
+.jt-vmodal__close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 1.5px;
+  background: #fff;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.jt-vmodal__close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+
+/* tap-to-play fallback (shown only if the browser blocks autoplay) */
+.jt-vmodal__play,
+.jt-vmodal__play:hover,
+.jt-vmodal__play:focus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 24px 9px 9px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: #1d2433;
+  font-family: "Futura normal", "Futura", sans-serif;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+}
+.jt-vmodal__play[hidden] { display: none; }
+.jt-vmodal__play .jt-play__icon { width: 38px; height: 38px; }
+.jt-vmodal__play .jt-play__icon svg { width: 13px; height: 15px; }
+
+body.jt-vlock { overflow: hidden; }
+
+@media (max-width: 767px) {
+  .jt-vmodal { padding: 64px 0 0; }
+  .jt-vmodal__frame { border-radius: 0; width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jt-play, .jt-vmodal, .jt-vmodal__frame, .jt-aq .elementor-flip-box__front { transition: none !important; }
+  .jt-play__icon { animation: none !important; }
+}

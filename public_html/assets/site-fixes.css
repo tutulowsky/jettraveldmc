@@ -1,0 +1,57 @@
+/* Jet Travel DMC – layout fixes on top of the original Elementor styles */
+
+/*
+ * Every page starts with a container pulled up by -200px (--margin-top) so the
+ * hero slider slides under the fixed header. That only works on wide screens.
+ */
+
+/* Header always above the page content. Elementor's sticky script normally
+   pins it (position: fixed); if that script fails, the hero slider (pulled up
+   by -200px) would otherwise cover the menu. */
+header.elementor-location-header {
+  position: relative;
+  z-index: 100;
+}
+
+/* Desktop dropdown (Why Jet Travel → Blog): open on hover / keyboard focus
+   even if the Smartmenus script doesn't kick in. */
+@media (min-width: 1025px) {
+  .elementor-nav-menu--main .menu-item-has-children:hover > .sub-menu,
+  .elementor-nav-menu--main .menu-item-has-children:focus-within > .sub-menu {
+    display: block !important;
+    top: 100%;
+    left: 0;
+    margin-top: 0 !important;
+    min-width: 12em;
+    z-index: 101;
+  }
+}
+
+/* Home hero: show the video's opening frame instantly while the Vimeo player
+   loads; the video fades in on top of it. */
+sr7-module[data-alias="slider-1"] {
+  background: #1d2433 url("/assets/img/hero-poster.webp") center center / cover no-repeat;
+}
+
+/* Blog posts: the slider there is empty, so the -200px pulls the post title and
+   the first paragraph under the header at every screen size. */
+.single-post main .elementor-element-f88b4ea,
+main.type-post .elementor-element-f88b4ea {
+  margin-top: 0 !important;
+  padding-top: 24px;
+}
+
+/* Pages with a hero slider: on tablet and mobile the header covers the slider's
+   title, so start the hero right below the header. */
+@media (max-width: 1024px) {
+  .elementor-element-9195a4c,  /* Home            */
+  .elementor-element-6a4541a,  /* Why Jet Travel  */
+  .elementor-element-ff0d749,  /* Spice of Hungary */
+  .elementor-element-32153d0,  /* Our services    */
+  .elementor-element-2b3f562,  /* Sustainability  */
+  .elementor-element-b0b85f5,  /* Contact         */
+  .elementor-element-b1b0a48,  /* Impressum       */
+  .elementor-element-d2c8fd0   /* Blog            */ {
+    margin-top: 0 !important;
+  }
+}
